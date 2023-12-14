@@ -1,5 +1,5 @@
 import { Controller, Get, Inject } from '@nestjs/common';
-import { AppService } from './app.service';
+import { AppService, MyFormmater } from './app.service';
 
 @Controller()
 export class AppController {
@@ -27,5 +27,10 @@ export class AppController {
   getHello(): string {
     console.log(this.person, this.person2);
     return this.appService.getHello();
+  }
+
+  @Get('hah')
+  getMyName(): MyFormmater[] {
+    return this.appService.getName();
   }
 }
