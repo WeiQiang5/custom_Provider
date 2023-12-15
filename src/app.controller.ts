@@ -1,5 +1,15 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Inject,
+  SetMetadata,
+  UseGuards,
+} from '@nestjs/common';
 import { AppService, MyFormmater } from './app.service';
+import { AaaGuard } from './aaa.guard';
+import { Aaa } from './aaa.decorator';
+import { Bbb } from './bbb.decorator';
+import { Ccc, MyHeaders } from './ccc.decorator';
 
 @Controller()
 export class AppController {
@@ -29,8 +39,37 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  // 自定义装饰器写法1
   @Get('hah')
+  @SetMetadata('aaa', 'admin')
+  @UseGuards(AaaGuard)
   getMyName(): MyFormmater[] {
     return this.appService.getName();
+  }
+
+  // 自定义装饰器写法2
+  @Get('hello')
+  @Aaa('admin')
+  @UseGuards(AaaGuard)
+  getHello2(): string {
+    return this.appService.getHello();
+  }
+
+  // 自定义装饰器写法3
+  @Bbb('hello2', 'admin')
+  getHello3(): string {
+    return this.appService.getHello();
+  }
+
+  // 自定义参数装饰器
+  @Get('hello4')
+  getHello4(@Ccc() c) {
+    return c;
+  }
+
+  @Get('hello5')
+  getHello5(@MyHeaders('Accept') headers1, @MyHeaders('Accept') headers2) {
+    console.log('header1', headers1);
+    console.log('header2', headers2);
   }
 }
