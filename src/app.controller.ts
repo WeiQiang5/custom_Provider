@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Inject,
+  Logger,
   SetMetadata,
   UseGuards,
 } from '@nestjs/common';
@@ -33,9 +34,12 @@ export class AppController {
   @Inject('person2')
   private readonly person2: { name: string; age: number };
 
+  private logger = new Logger();
+
   @Get()
   getHello(): string {
-    console.log(this.person, this.person2);
+    // console.log(this.person, this.person2);
+    this.logger.log('hello', AppController.name);
     return this.appService.getHello();
   }
 

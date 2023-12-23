@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PipelearnModule } from './pipelearn/pipelearn.module';
+import { DownloadModule } from './download/download.module';
 
 @Module({
-  imports: [PipelearnModule],
+  imports: [PipelearnModule, DownloadModule],
   controllers: [AppController],
   // 这是写法1，是写法2的简写
   // providers: [AppService],
